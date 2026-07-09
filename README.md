@@ -14,7 +14,7 @@ For any questions feel free to contact us under the following MII ZULIP channel:
 
 ## Prerequisites
 - **Environment:** An active R installation (RStudio or CLI).
-- **R Packages:** `fhircrackr` and `data.table`. *(Note: The script features smart package loading and will automatically install these only if they are missing).*
+- **R Packages:** `fhircrackr`, `data.table`, and `httr`. *(Note: The script features smart package loading and will automatically install required packages only if they are missing. Interactive password entry additionally installs `getPass` on demand).*
 - **FHIR Endpoint:** A reachable FHIR server URL.
 - **Authentication Credentials:** A valid technical user account for the FHIR server.
 - **Security & Network Considerations**: Before executing the script, please check the "Security & Network Considerations" section at the end of this README for SSL configuration details.

@@ -243,11 +243,18 @@ for(id_chunk in split_ids_cond){
       df_cond <- df_cond[!duplicated(df_cond$condition_id), ]
       df_cond$recordedDate <- format(as.Date(df_cond$recordedDate), "%d-%m-%Y")
 
-      write.table(df_cond, CONFIG$file_condition, sep=",",
-                  row.names=FALSE,
-                  col.names=first_write_condition,
-                  append=!first_write_condition)
-      first_write_condition <- FALSE
+      if (file.exists(CONFIG$file_condition)) {
+        existing_ids <- fread(CONFIG$file_condition, select = "condition_id")
+        df_cond <- df_cond[!df_cond$condition_id %in% existing_ids$condition_id, ]
+      }
+
+      if (nrow(df_cond) > 0) {
+        write.table(df_cond, CONFIG$file_condition, sep = ",",
+                    row.names = FALSE,
+                    col.names = first_write_condition,
+                    append = !first_write_condition)
+        first_write_condition <- FALSE
+      }
     }
   }
 }

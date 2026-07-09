@@ -62,9 +62,9 @@ if (nzchar(auth_pw)) {
 
 # SSL Configuration
 if (!CONFIG$verify_ssl) {
-  set_config(config(ssl_verifypeer = 0L, ssl_verifyhost = 0L))
+  httr::set_config(httr::config(ssl_verifypeer = 0L, ssl_verifyhost = 0L))
 } else if (file.exists(CONFIG$ssl_cert_path)) {
-  set_config(config(cainfo = CONFIG$ssl_cert_path))
+  httr::set_config(httr::config(cainfo = CONFIG$ssl_cert_path))
 } else {
   warning("SSL verification is enabled, but certificate file was not found.")
 }

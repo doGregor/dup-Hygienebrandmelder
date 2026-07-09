@@ -268,7 +268,11 @@ cat("Starting Procedure extraction...\n")
 
 split_ids_proc <- split(patient_ids, ceiling(seq_along(patient_ids)/CONFIG$chunk_procedure))
 first_write_procedure <- !file.exists(CONFIG$file_procedure)
-seen_procedure_ids <- character()
+seen_procedure_ids <- if (file.exists(CONFIG$file_procedure)) {
+  fread(CONFIG$file_procedure, select = "procedure_id")$procedure_id
+} else {
+  character()
+}
 
 for(id_chunk in split_ids_proc){
   procedure_request <- fhir_url(

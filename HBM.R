@@ -46,14 +46,18 @@ if(length(new_packages)) install.packages(new_packages)
 library(fhircrackr)
 library(data.table)
 
-# Password Handling (CLI argument OR interactive prompt)
+# Password Handling (preferred: env var, fallback: CLI arg, interactive: hidden prompt)
 args <- commandArgs(trailingOnly = TRUE)
-if (length(args) > 0) {
+auth_pw <- Sys.getenv("HBM_FHIR_PASSWORD", unset = "")
+if (nzchar(auth_pw)) {
+  # preferred for automation; avoids shell history/process listings
+} else if (length(args) > 0 && nzchar(args[1])) {
   auth_pw <- args[1]
 } else if (interactive()) {
-  auth_pw <- readline(prompt = "Enter FHIR Auth Password: ")
+  if (!requireNamespace("getPass", quietly = TRUE)) install.packages("getPass")
+  auth_pw <- getPass::getPass("Enter FHIR Auth Password: ")
 } else {
-  stop("Password missing! Provide it as an argument: Rscript script.R <password>")
+  stop("Password missing! Set HBM_FHIR_PASSWORD or provide it as the first argument to HBM.R.")
 }
 
 # SSL Configuration

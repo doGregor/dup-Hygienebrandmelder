@@ -42,19 +42,21 @@ CONFIG <- list(
 
 ## Execution Information
 
-The script features flexible password handling and can be executed in two ways, ensuring that sensitive passwords are never hardcoded into the script:
+The script supports three password input methods. For non-interactive automation, prefer the `HBM_FHIR_PASSWORD` environment variable because it avoids shell history and process-list exposure. A CLI argument is still supported as a fallback, and interactive runs use a hidden prompt.
 
-### Option 1: Command Line Interface (Recommended for Automation)
+### Option 1: Environment Variable (Recommended)
 
-Run the script via your terminal and pass the password as the first argument.
-
+```bash
+HBM_FHIR_PASSWORD='YOUR_SECURE_PASSWORD' Rscript HBM.R
 ```
+
+### Option 2: Command Line Argument (Fallback)
+
+```bash
 Rscript HBM.R "YOUR_SECURE_PASSWORD"
 ```
 
-### Option 2: Interactive Session (RStudio / R Console)
-
-If you simply run or source the script inside an interactive environment like RStudio, the script will pause and securely prompt you to type the password into the console:
+### Option 3: Interactive Session (RStudio / R Console)
 
 ```
 Enter FHIR Auth Password:

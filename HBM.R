@@ -140,7 +140,7 @@ for(year in CONFIG$start_year:CONFIG$end_year){
     enc_url <- paste0(CONFIG$base_url, "Encounter?",
                       "date=ge", q[1],
                       "&date=lt", q[2] + 1,
-                      "&class=IMP&count=200")
+                      "&class=IMP&_count=200")
 
     bundles <- fhir_search(request = enc_url, username = CONFIG$auth_user,
                            password = auth_pw, max_bundles = Inf)
